@@ -9,7 +9,7 @@
 
       $ cat wordcount.pig
 
-      lines = LOAD '/datasets/gutenberg/gutenberg-small/*.txt' AS (line:chararray);
+      lines = LOAD '/datasets/gutenberg-small/*.txt' AS (line:chararray);
       words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) as word;
       grouped = GROUP words BY word;
       wordcount = FOREACH grouped GENERATE group, COUNT(words) as cont;

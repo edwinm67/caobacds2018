@@ -205,6 +205,19 @@ $ sqoop create-hive-table --connect jdbc:mysql://127.0.0.1:3306/cursodb --userna
 $ sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-import --hive-database cds##bog1 --hive-table employee -m 1 --mysql-delimiters
 ```
 
+// Transferir todas las tablas de una base de datos (tipo mysql) hacia HIVE vía HDFS:
+
+```
+sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --warehouse-dir /user/emontoya/mysqlOut1 --mysql-delimiters -m 1
+
+sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --warehouse-dir=/user/hive/warehouse/emontoya.db/ --hive-import --mysql-delimiters -m 1 
+
+sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --hive-database emontoya --create-hive-table --warehouse-dir=/user/emontoya/stagemysql1/ --hive-import --mysql-delimiters -m 1 
+
+sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --hive-database emontoya --hive-overwrite --warehouse-dir=/user/emontoya/stagemysql/ --hive-import --mysql-delimiters -m 1 
+```
+
+
 // Poblar o llenar la tabla Hive Manualmente:
 ```
 $ beeline

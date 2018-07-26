@@ -59,12 +59,19 @@ Lo podrá hacer desde su PC vía Ambari Web
 
 otro comando para copiar:
 
-    user@master$ hdfs dfs -copyFromLocal /datasets/gutenberg/gutenberg-small.zip /user/<username>/datasets/gutenberg/
+    Descomprima los datos .zip en un dir local (al GATEWAY), clone el repo.
+
+    user@master$ cd ~$HOME/caobacds2018/datasets/gutenberg/
+    user@master$ unzip gutenberg-small.zip
+
+    En general, descomprima todos los archivos del dataset que quiera procesar en Hadoop/Spark.
+    
+    user@master$ hdfs dfs -copyFromLocal /user/<username>/datasets/* /user/<username>/datasets/
 
 listar archivos: 
 
     user@master$ hdfs dfs -ls /user/<username>/datasets
-    user@master$ hdfs dfs -ls /user/<username>/datasets/gutenberg
+    user@master$ hdfs dfs -ls /user/<username>/datasets/gutenberg-small/
 
 ### Copiar archivos de HDFS hacia el servidor local (gateway)
 
