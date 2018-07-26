@@ -1,0 +1,89 @@
+# Hadoop - HDFS
+# Curso Citizen Data Scientist - CAOBA
+# Profesor: Edwin Montoya M. – emontoya@eafit.edu.co
+# 2018
+#
+# Scripts de HIVE
+#
+
+datos de conexión:
+
+Mysql
+IP: 127.0.0.1
+Database: retail_db
+Username: retail_dba
+Password: caoba
+
+importar datos via sqoop:
+
+$ sqoop import-all-tables -m 1 --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --mysql-delimiters --warehouse-dir=/user/hive/warehouse/username.db/ --hive-import
+
+-- CATEGORIAS MÁS POPULARES DE PRODUCTOS
+
+beeline> select c.category_name, count(order_item_quantity) as count
+from order_items oi
+inner join products p on oi.order_item_product_id = p.product_id
+inner join categories c on c.category_id = p.product_category_id
+group by c.category_name
+order by count desc
+limit 10;
+
+-- top 10 de productos que generan ganancias
+beeline> select p.product_id, p.product_name, r.revenue
+from products p inner join
+(select oi.order_item_product_id, sum(cast(oi.order_item_subtotal as float)) as revenue
+from order_items oi inner join orders o
+on oi.order_item_order_id = o.order_id
+where o.order_status <> 'CANCELED'
+and o.order_status <> 'SUSPECTED_FRAUD'
+group by order_item_product_id) r
+on p.product_id = r.order_item_product_id
+order by r.revenue desc
+limit 10;
+
+-- crear las tablas externas via web:
+
+$ hdfs dfs -mkdir /user/<username>/hive/warehouse/original_access_logs
+$ hdfs dfs -mkdir /user/<username>/hive/warehouse/tokenized_access_logs
+$ hdfs dfs -put access.log.2 /user/<username>/hive/warehouse/original_access_logs
+
+beeline> use <username>;
+
+beeline> CREATE EXTERNAL TABLE intermediate_access_logs (
+    ip STRING,
+    date STRING,
+    method STRING,
+    url STRING,
+    http_version STRING,
+    code1 STRING,
+    code2 STRING,
+    dash STRING,
+    user_agent STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe'
+WITH SERDEPROPERTIES (
+    'input.regex' = '([^ ]*) - - \\[([^\\]]*)\\] "([^\ ]*) ([^\ ]*) ([^\ ]*)" (\\d*) (\\d*) "([^"]*)" "([^"]*)"',
+    'output.format.string' = "%1$$s %2$$s %3$$s %4$$s %5$$s %6$$s %7$$s %8$$s %9$$s")
+LOCATION '/user/<username>/hive/warehouse/original_access_logs';
+
+beeline> CREATE EXTERNAL TABLE tokenized_access_logs (
+    ip STRING,
+    date STRING,
+    method STRING,
+    url STRING,
+    http_version STRING,
+    code1 STRING,
+    code2 STRING,
+    dash STRING,
+    user_agent STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/user/<username>/hive/warehouse/tokenized_access_logs';
+
+beeline> ADD JAR /usr/lib/hive/lib/hive-contrib.jar;
+
+beeline> INSERT OVERWRITE TABLE tokenized_access_logs SELECT * FROM intermediate_access_logs;
+
+--- MUESTRE LOS PRODUCTOS MÁS VISITADOS
+
+beeline> SELECT count(*),url FROM tokenized_access_logs
+WHERE url LIKE '%\/product\/%'
+GROUP BY url ORDER BY count(*) DESC;

@@ -1,0 +1,79 @@
+¿QUE RESPONDEN ESTOS PROCESOS?
+
+athletes = LOAD '/datasets/OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+data_range = FOREACH (GROUP athletes ALL) GENERATE MIN(athletes.year) as min_year, MAX(athletes.year) as max_year;
+DUMP data_range;
+
+————————————————————————————————
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+athletes_copy = FOREACH athletes GENERATE athlete, year as year2, total as medals2;
+athletes_join = JOIN athletes BY athlete, athletes_copy BY athlete;
+athletes_join_filtered = FILTER athletes_join BY total == medals2 AND year2 == year+4;
+athletes_output = FOREACH athletes_join_filtered GENERATE athletes::athlete as athlete, total, year, year2;
+DUMP athletes_output;
+
+————————————————————————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+distinct_countries = DISTINCT (FOREACH athletes GENERATE country);
+DUMP distinct_countries;
+
+————————————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+athletes_filter = FILTER athletes by sport != 'Swimming';
+medal_sum = FOREACH (GROUP athletes_filter BY country) GENERATE group as country, SUM(athletes_filter.total) as medal_count;
+ordered_medals = ORDER medal_sum BY medal_count DESC;
+ordered_medals_lim = LIMIT ordered_medals 1;
+DUMP ordered_medals_lim;
+
+—————————————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+data_range = FOREACH (GROUP athletes ALL) GENERATE MIN(athletes.year) as min_year, MAX(athletes.year) as max_year;
+DUMP data_range;
+
+——————————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+athletes_grp_country = GROUP athletes BY country;
+DUMP athletes_grp_country;
+—————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+athletes_copy = FOREACH athletes GENERATE athlete, year as year2, total as medals2;
+athletes_join = JOIN athletes BY athlete, athletes_copy BY athlete;
+athletes_join_filtered = FILTER athletes_join BY total == medals2 AND year2 == year+4;
+athletes_output = FOREACH athletes_join_filtered GENERATE athletes::athlete as athlete, total, year, year2;
+DUMP athletes_output;
+
+——————————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+athletes_lim = LIMIT athletes 10;
+DUMP athletes_lim;
+
+——————————————
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+athletes_grp_country = GROUP athletes BY country;
+medal_sum = FOREACH athletes_grp_country GENERATE group AS country, SUM(athletes.total) as medal_count;
+ordered_medals = ORDER medal_sum BY medal_count DESC;
+ordered_medals_lim = LIMIT ordered_medals 1;
+DUMP ordered_medals_lim;
+——————————————————————
+
+athletes = LOAD 'OlympicAthletesSample.csv' 
+USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+SPLIT athletes INTO summer_olympics IF year % 4 ==0,winter_olympics IF year % 4 != 0;
+
+
+

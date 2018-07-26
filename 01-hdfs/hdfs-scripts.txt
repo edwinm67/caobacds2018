@@ -1,0 +1,40 @@
+# carga de datos a HDFS por terminal:
+# reemplace '<username>' por el username asignado para el curso
+
+hdfs dfs -ls /
+hdfs dfs -ls /user
+hdfs dfs -ls /user/<username>
+hdfs dfs -ls /datasets
+
+hdfs dfs -mkdir /user/<username>
+hdfs dfs -mkdir /user/<username>/datasets
+
+hdfs dfs -mkdir /user/<username>/datasets/gutenberg
+
+hdfs dfs -put /datasets/gutenberg/gutenberg-small.zip /user/<username>/datasets/gutenberg/
+
+hdfs dfs -copyFromLocal /datasets/gutenberg/gutenberg-small.zip /user/<username>/datasets/gutenberg/
+hdfs dfs -ls /user/<username>/datasets
+hdfs dfs -ls /user/<username>/datasets/gutenberg
+
+hdfs dfs -get /user/<username>/gutenberg/gutenberg-small.zip ~<username>/mis_datasets/
+
+hdfs dfs -copyToLocal /user/<username>/gutenberg/gutenberg-small.zip ~<username>/mis_datasets/
+
+ls -l mis_datasets
+
+# SCRIPTS DE SQOOP
+
+sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --target-dir=/user/<username>/employee -m 1 --mysql-delimiters
+
+hdfs dfs -ls /user/<username>/employee
+
+hdfs dfs -cat /user/<username>/employee/part-m-00000
+
+sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/cursodb --username=curso --password=curso --warehouse-dir=/user/<username>/cursodb -m 1 --mysql-delimiters
+
+hdfs dfs -ls /user/<username>/cursodb
+
+hdfs dfs -ls /user/<username>/cursodb/employee
+
+hdfs dfs -cat /user/<username>/cursodb/employee/part-m-00000
