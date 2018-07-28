@@ -5,6 +5,11 @@
 
 # Ejecutar programas desde la terminal en PIG:
 
+## Ejecutar el interprete de pig en Terminal:
+
+    $ pig
+    <grunt> 
+
 ## Ejemplo WordCount:
 
       $ cat wordcount.pig
