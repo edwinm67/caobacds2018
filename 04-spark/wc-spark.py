@@ -10,4 +10,9 @@ text_file = sc.textFile(inputdir)
 counts = text_file.flatMap(lambda line: line.split(" ")) \
     .map(lambda word: (word, 1)) \
     .reduceByKey(lambda a, b: a + b)
-counts.saveAsTextFile(outputdir)
+# multiples archivos de salida    
+# counts.saveAsTextFile(outputdir)
+# un solo archivo de salida:
+counts.coalesce(1).saveAsTextFile(outputdir)
+
+
