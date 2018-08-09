@@ -1,6 +1,6 @@
 ¿QUE RESPONDEN ESTOS PROCESOS?
 
-athletes = LOAD '/datasets/olympic//datasets/olympic/OlympicAthletesSample.csv' 
+athletes = LOAD '/datasets/olympic/datasets/olympic/OlympicAthletesSample.csv' 
 USING org.apache.pig.piggybank.storage.CSVExcelStorage(',', 'YES_MULTILINE', 'NOCHANGE', 'SKIP_INPUT_HEADER') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
 data_range = FOREACH (GROUP athletes ALL) GENERATE MIN(athletes.year) as min_year, MAX(athletes.year) as max_year;
 DUMP data_range;

@@ -17,7 +17,7 @@ Terminal:
 
 Usuarios:
 
-    username: cds##bog1
+    username: cds##cali
     password: <enviado por email>
 
 ## 2. Datos de conexión a la base de datos MySQL

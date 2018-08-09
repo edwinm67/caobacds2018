@@ -11,7 +11,7 @@
 
 ## ¿Qué pregunta responde este pig script?
 
-      athletes = LOAD '/user/<username>/datasets/OlympicAthletesSample.txt' USING PigStorage(',') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+      athletes = LOAD '/datasets/olympic/OlympicAthletesSample.txt' USING PigStorage(',') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
       
       distinct_countries = DISTINCT (FOREACH athletes GENERATE country);
       
@@ -19,7 +19,7 @@
 
 ## ¿Qué pregunta responde este pig script?
 
-      athletes = LOAD '/user/<username>/datasets/OlympicAthletesSample.txt' USING PigStorage(',') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+      athletes = LOAD '/datasets/olympic/OlympicAthletesSample.txt' USING PigStorage(',') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
 
       athletes_filter = FILTER athletes by sport != 'Swimming';
 
@@ -31,7 +31,7 @@
 
 ## ¿Qué pregunta responde este pig script?
 
-      athletes = LOAD '/user/<username>/datasets/OlympicAthletesSample.txt' USING PigStorage(',') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
+      athletes = LOAD '/datasets/olympic/OlympicAthletesSample.txt' USING PigStorage(',') AS (athlete:chararray, country:chararray, year:int, sport:chararray, gold:int, silver:int, bronze:int, total:int);
 
       athletes_grp_country = GROUP athletes BY country;
 
@@ -44,5 +44,3 @@
 ## Realice el script pig que permita responder la siguiente pregunta:
 
 ### Liste cantidad de medallas de Oro, Plata, Bronce y Total por PAIS, ordenado por Medallas de Oro:
-
-      

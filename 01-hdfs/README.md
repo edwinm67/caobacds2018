@@ -5,7 +5,7 @@
 
 # Laboratorio HDFS
 
-## 1. Conexión al cluster Hadoop
+## 1. CONEXIÓN AL CLUSTER
 
 Ambari Web
 
@@ -17,10 +17,10 @@ Terminal:
 
 Usuarios:
 
-    username: cds##bog1
+    username: cds##cali
     password: <enviado por email>
 
-## 2. Gestión de archivos en HDFS vía Terminal
+## 2. GESTIÓN DE ARCHIVOS EN HDFS VÍA TERMINAL
 
 1. Cargar los datos de los datasets de trabajo del curso en HDFS 
 2. Cada alumno creara en hdfs un directorio 'datasets'
@@ -101,7 +101,11 @@ comandos:
     chown <username> files   cambiar el dueño de un archivo
     chgrp <group> files      cambiar el grupo de un archivo
 
-## 3. Gestion de archivos vía Ambari Web:
+## 3. EXTRACCIÓN DE DATOS DESDE RDBMS VIA SQOOP HACIA HDFS
+
+    ![MYSQL2HDFS](mysql2hdfs.md)
+
+## 4. GESTIÓN DE ARCHIVOS VÍA AMBARI WEB
 
 * Login
 

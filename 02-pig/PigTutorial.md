@@ -7,7 +7,7 @@
 
 ## Apache Pig - LOAD data
 
-### student_data.txt ($ hdfs dfs -put student_data.txt /user/username/datasets/pig/)
+### student_data.txt ($ hdfs dfs -put student_data.txt /user/username/datasets/students/)
 
       001,Rajiv,Reddy,9848022337,Hyderabad
       002,siddarth,Battacharya,9848022338,Kolkata
@@ -18,7 +18,7 @@
 
 ### Load Data
 
-      grunt> student = LOAD '/user/username/datasets/pig/student_data.txt' USING PigStorage(',')
+      grunt> student = LOAD '/datasets/students/student_data.txt' USING PigStorage(',')
       as ( id:int, firstname:chararray, lastname:chararray, phone:chararray, city:chararray );
 
       grunt> dump student;      
@@ -60,7 +60,7 @@ The illustrate operator gives you the step-by-step execution of a sequence of st
 
 The GROUP operator is used to group the data in one or more relations. It collects the data having the same key.
 
-### student_details.txt ($ hdfs dfs -put student_details.txt /user/username/datasets/pig/)
+### student_details.txt ($ hdfs dfs -put student_details.txt /user/username/datasets/students/)
 
       001,Rajiv,Reddy,21,9848022337,Hyderabad
       002,siddarth,Battacharya,22,9848022338,Kolkata
@@ -73,7 +73,7 @@ The GROUP operator is used to group the data in one or more relations. It collec
 
 Example:
 
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray);
 
       grunt> group_data = GROUP student_details by age;
@@ -116,10 +116,10 @@ group operator is normally used with one relation, while the cogroup operator is
 
 load data:
 
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray);
   
-      grunt> employee_details = LOAD '/user/username/datasets/pig/employee_details.txt' USING PigStorage(',')
+      grunt> employee_details = LOAD '/datasets/students/employee_details.txt' USING PigStorage(',')
       as (id:int, name:chararray, age:int, city:chararray);
 
  cogroup:
@@ -140,7 +140,7 @@ Joins can be of the following types:
 
 Example:
 
-### customers.txt ($ hdfs dfs -put customers.txt /user/username/datasets/pig/)
+### customers.txt ($ hdfs dfs -put customers.txt /user/username/datasets/students/)
 
       1,Ramesh,32,Ahmedabad,2000.00
       2,Khilan,25,Delhi,1500.00
@@ -150,7 +150,7 @@ Example:
       6,Komal,22,MP,4500.00
       7,Muffy,24,Indore,10000.00  
 
-### orders.txt ($ hdfs dfs -put orders.txt /user/username/datasets/pig/)
+### orders.txt ($ hdfs dfs -put orders.txt /user/username/datasets/students/)
 
       102,2009-10-08 00:00:00,3,3000
       100,2009-10-08 00:00:00,3,1500
@@ -159,20 +159,20 @@ Example:
 
 ### Load data:
 
-      grunt> customers = LOAD '/user/username/datasets/pig/customers.txt' USING PigStorage(',')
+      grunt> customers = LOAD '/datasets/students/customers.txt' USING PigStorage(',')
       as (id:int, name:chararray, age:int, address:chararray, salary:int);
       
-      grunt> orders = LOAD '/user/username/datasets/pig/orders.txt' USING PigStorage(',')
+      grunt> orders = LOAD '/datasets/students/orders.txt' USING PigStorage(',')
       as (oid:int, date:chararray, customer_id:int, amount:int);     
 
 ### Self - join
 
 Self-join is used to join a table with itself as if the table were two relations, temporarily renaming at least one relation.
 
-      grunt> customers1 = LOAD '/user/username/datasets/pig/customers.txt' USING PigStorage(',')
+      grunt> customers1 = LOAD '/datasets/students/customers.txt' USING PigStorage(',')
       as (id:int, name:chararray, age:int, address:chararray, salary:int);
       
-      grunt> customers2 = LOAD '/user/username/datasets/pig/customers.txt' USING PigStorage(',')
+      grunt> customers2 = LOAD '/datasets/students/customers.txt' USING PigStorage(',')
       as (id:int, name:chararray, age:int, address:chararray, salary:int);    
 
       grunt> customers3 = JOIN customers1 BY id, customers2 BY id;
@@ -238,10 +238,10 @@ employee_contact.txt
 
 example:
 
-      grunt> employee = LOAD '/user/username/datasets/pig/employee.txt' USING PigStorage(',')
+      grunt> employee = LOAD '/datasets/students/employee.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, designation:chararray, jobid:int);
       
-      grunt> employee_contact = LOAD '/user/username/datasets/pig/employee_contact.txt' USING PigStorage(',') 
+      grunt> employee_contact = LOAD '/datasets/students/employee_contact.txt' USING PigStorage(',') 
       as (id:int, phone:chararray, email:chararray, city:chararray, jobid:int);         
 
       grunt> emp = JOIN employee BY (id,jobid), employee_contact BY (id,jobid);
@@ -273,10 +273,10 @@ orders.txt
 
 load data:
 
-      grunt> customers = LOAD '/user/username/datasets/pig/customers.txt' USING PigStorage(',')
+      grunt> customers = LOAD '/datasets/students/customers.txt' USING PigStorage(',')
       as (id:int, name:chararray, age:int, address:chararray, salary:int);
       
-      grunt> orders = LOAD '/user/username/datasets/pig/orders.txt' USING PigStorage(',')
+      grunt> orders = LOAD '/datasets/students/orders.txt' USING PigStorage(',')
       as (oid:int, date:chararray, customer_id:int, amount:int);
 
 cross command:
@@ -306,10 +306,10 @@ student_data2.txt
 
 load data:
 
-      grunt> student1 = LOAD '/user/username/datasets/pig/student_data1.txt' USING PigStorage(',') 
+      grunt> student1 = LOAD '/datasets/students/student_data1.txt' USING PigStorage(',') 
       as (id:int, firstname:chararray, lastname:chararray, phone:chararray, city:chararray); 
       
-      grunt> student2 = LOAD '/user/username/datasets/pig/student_data2.txt' USING PigStorage(',') 
+      grunt> student2 = LOAD '/datasets/students/student_data2.txt' USING PigStorage(',') 
       as (id:int, firstname:chararray, lastname:chararray, phone:chararray, city:chararray); 
 
 union command:
@@ -334,7 +334,7 @@ student_details.txt
       007,Komal,Nayak,24,9848022334,trivendram 
       008,Bharathi,Nambiayar,24,9848022333,Chennai
 
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray); 
 
       grunt> filter_data = FILTER student_details BY city == 'Chennai';    
@@ -347,7 +347,7 @@ The DISTINCT operator is used to remove redundant (duplicate) tuples from a rela
 
 Example:
 
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray); 
 
       grunt> distinct_data = DISTINCT student_details;   
@@ -359,7 +359,7 @@ Example:
 The FOREACH operator is used to generate specified data transformations based on the column data.
 
 Example:
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray); 
 
       grunt> foreach_data = FOREACH student_details GENERATE id,age,city;
@@ -372,7 +372,7 @@ The ORDER BY operator is used to display the contents of a relation in a sorted 
 
 Example:
 
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray);
 
       grunt> order_by_data = ORDER student_details BY age DESC;
@@ -385,7 +385,7 @@ The LIMIT operator is used to get a limited number of tuples from a relation.
 
 Example:
 
-      grunt> student_details = LOAD '/user/username/datasets/pig/student_details.txt' USING PigStorage(',')
+      grunt> student_details = LOAD '/datasets/students/student_details.txt' USING PigStorage(',')
       as (id:int, firstname:chararray, lastname:chararray, age:int, phone:chararray, city:chararray);
 
       grunt> limit_data = LIMIT student_details 4;   

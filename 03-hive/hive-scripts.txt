@@ -64,6 +64,7 @@
 * crear tabla
     beeline> use <username>;
     beeline> CREATE TABLE docs (line STRING); 
+    beeline> CREATE EXTERNAL TABLE extdocs (line STRING) STORED AS TEXTFILE LOCATION '/datasets/gutenberg-txt-es/';
 
 * carga incremental 
     beeline> LOAD DATA INPATH '<dir>/gutenberg/*.txt' INTO TABLE docs; 

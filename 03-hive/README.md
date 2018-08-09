@@ -19,7 +19,7 @@ Terminal:
 
 Usuarios:
 
-    username: cds##bog1
+    username: cds##cali
     password: <enviado por email>
 
 ## 2. Los archivos de trabajo hdi-data.csv y export-data.csv
@@ -48,7 +48,7 @@ beeline> !connect jdbc:hive2://sandbox-hdp.hortonworks.com:2181/;serviceDiscover
 2. Crear la base de datos
 
 ```
-beeline> create database cds##bog1;
+beeline> create database cds##cali;
 ```
 
 3. Crear la tabla HDI en Hive:
@@ -57,9 +57,9 @@ beeline> use <username>;
 beeline> CREATE TABLE HDI (id INT, country STRING, hdi FLOAT, lifeex INT, mysch INT, eysch INT, gni INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
 ```
 
-Nota: Esta tabla la crea en una BASE DE DATOS 'cds##bog1'
+Nota: Esta tabla la crea en una BASE DE DATOS 'cds##cali'
 ```
-beeline> use cds##bog1;
+beeline> use cds##cali;
 beeline> show tables;
 beeline> describe hdi;
 ```
@@ -67,7 +67,7 @@ beeline> describe hdi;
 4. cargar los datos desde el Gateway (local) a la tabla HDI:
 
 ```
-beeline> load data local inpath '/home/cds##bog1/datasets/onu/hdi-data.csv' into table HDI;
+beeline> load data local inpath '/home/cds##cali/datasets/onu/hdi-data.csv' into table HDI;
 ```
 
 cargar datos desde el HDFS:
@@ -112,7 +112,7 @@ beeline> SELECT h.country, gni, expct FROM HDI h JOIN EXPO e ON (h.country = e.c
 ### WORDCOUNT EN HIVE:
 ```
 beeline> use <username>;
-beeline>CREATE EXTERNAL TABLE docs (line STRING) STORED AS TEXTFILE LOCATION '/user/cds##bog1/datasets/gutenberg/gutenberg-small/';
+beeline>CREATE EXTERNAL TABLE docs (line STRING) STORED AS TEXTFILE LOCATION '/user/cds##cali/datasets/gutenberg/gutenberg-small/';
 ```
 
 // ordenado por palabra
@@ -196,13 +196,13 @@ $ hdfs dfs -ls /user/username/mysqlOut
 
 // Crear tabla HIVE a partir de definición tabla Mysql:
 ```
-$ sqoop create-hive-table --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-database cds##bog1 --hive-table employee -m 1--mysql-delimiters
+$ sqoop create-hive-table --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-database cds##cali --hive-table employee -m 1--mysql-delimiters
 ```
 
 // Transferir datos de una base de datos (tipo mysql) hacia HIVE vía HDFS:
 
 ```
-$ sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-import --hive-database cds##bog1 --hive-table employee -m 1 --mysql-delimiters
+$ sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-import --hive-database cds##cali --hive-table employee -m 1 --mysql-delimiters
 ```
 
 // Transferir todas las tablas de una base de datos (tipo mysql) hacia HIVE vía HDFS:
