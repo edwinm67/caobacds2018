@@ -66,7 +66,7 @@ otro comando para copiar:
 
     En general, descomprima todos los archivos del dataset que quiera procesar en Hadoop/Spark.
     
-    user@master$ hdfs dfs -copyFromLocal /user/<username>/datasets/* /user/<username>/datasets/
+    user@master$ hdfs dfs -copyFromLocal /datasets/* /user/<username>/datasets/
 
 listar archivos: 
 
