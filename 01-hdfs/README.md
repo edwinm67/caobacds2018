@@ -103,7 +103,7 @@ comandos:
 
 ## 3. EXTRACCIÓN DE DATOS DESDE RDBMS VIA SQOOP HACIA HDFS
 
-    ![MYSQL2HDFS](mysql2hdfs.md)
+![MYSQL2HDFS](mysql2hdfs.md)
 
 ## 4. GESTIÓN DE ARCHIVOS VÍA AMBARI WEB
 
