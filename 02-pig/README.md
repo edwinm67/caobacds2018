@@ -93,7 +93,7 @@ Se tiene un conjunto de datos en el cual se evalúan las películas con un ratin
 
 * Realizar un programa en PIG que permita calcular:
 
-1. Número de películas vista por un usuario, valor promedio de calificación
+1. Número de películas vista por un usuario, valor promedio de baqficación
 2. Día en que más películas se han visto
 3. Día en que menos películas se han visto
 4. Número de usuarios que ven una misma película y el rating promedio

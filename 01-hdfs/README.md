@@ -17,7 +17,7 @@ Terminal:
 
 Usuarios:
 
-    username: cds##cali
+    username: cds##baq
     password: <enviado por email>
 
 ## 2. GESTIÓN DE ARCHIVOS EN HDFS VÍA TERMINAL

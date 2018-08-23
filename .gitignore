@@ -1,8 +1,6 @@
 .DS_Store
 hive/
 datasets/.DS_Store
-datasets/.DS_Store
 03-hive/script1.sql
 03-hive/script2.sql
-datasets/.DS_Store
 datasets/gutenberg/gutenberg-txt-es.zip
