@@ -1,4 +1,3 @@
-# Hadoop - HDFS
 ## Curso Citizen Data Scientist - CAOBA
 ### Profesor: Edwin Montoya M. – emontoya@eafit.edu.co
 ## 2018
@@ -17,7 +16,7 @@ Terminal:
 
 Usuarios:
 
-    username: cds##baq
+    username: cds##bog3
     password: <enviado por email>
 
 ## 2. Datos de conexión a la base de datos MySQL
@@ -72,3 +71,14 @@ Verifique la importación:
     $ hdfs dfs -cat /user/<username>/cursodb/employee/part-m-00000
 
 3. Realice el proceso de importación de: (A) UNA tabla especifica de 'retail_db' hacia hdfs, y (B) Todas las tablas de 'retail_db' hacia /user/'username'/retail_db
+
+(A)
+
+    $ sqoop import --connect jdbc:mysql://127.0.0.1:3306/retail_db --username retail_dba -P --table products --target-dir=/user/<username>/products -m 1 --mysql-delimiters
+
+
+(B)
+
+    $ sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --warehouse-dir=/user/<username>/retail_db -m 1 --mysql-delimiters
+
+[modelo retail](retail_db_schema.png)    

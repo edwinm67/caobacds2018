@@ -1,4 +1,3 @@
-# Hadoop - HDFS
 ## Curso Citizen Data Scientist - CAOBA
 ### Profesor: Edwin Montoya M. – emontoya@eafit.edu.co
 ## 2018
@@ -10,7 +9,7 @@
     $ pig
     <grunt> 
 
-## Ejemplo WordCount:
+## Ejemplo WordCount desde Terminal:
 
       $ cat wordcount.pig
 
@@ -24,6 +23,27 @@
       DUMP Top10;
 
       $ pig -f wordcount.pig
+
+## Ejemplo WordCount desde Ambari - Pig View:
+
+Si lo va a ejecutar desde AMBARI - Pig, tenga en cuenta:
+
+      lines = LOAD '/datasets/gutenberg-small/*.txt' AS (line:chararray);
+      words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) as word;
+      grouped = GROUP words BY word;
+      wordcount = FOREACH grouped GENERATE group, COUNT(words) as cont;
+      ordered = ORDER wordcount BY cont DESC;
+      STORE ordered INTO ‘/tmp/wordcount';
+      Top10 = LIMIT ordered 10;
+      DUMP Top10;
+      FS -rm -r /tmp/yarn
+
+ejecute ese comando FS, para borrar los archivos temporales, de lo contrario, la próxima vez que ejecute ud u otro, le va a fallar.
+
+Si omitió este comando (FS -rm -r /tmp/yarn), debe por terminal borrarlo así:
+
+    $ hdfs dfs -rm -r /tmp/yarn
+
             
 ## Tutorial Pig de comandos
 
@@ -93,7 +113,7 @@ Se tiene un conjunto de datos en el cual se evalúan las películas con un ratin
 
 * Realizar un programa en PIG que permita calcular:
 
-1. Número de películas vista por un usuario, valor promedio de baqficación
+1. Número de películas vista por un usuario, valor promedio de calificación
 2. Día en que más películas se han visto
 3. Día en que menos películas se han visto
 4. Número de usuarios que ven una misma película y el rating promedio

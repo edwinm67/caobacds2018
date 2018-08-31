@@ -97,3 +97,4 @@ sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P -
 sqoop create-hive-table --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --database emontoya --hive-database emontoya --table employee --hive-table empleados --mysql-delimiters
 
 sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --hive-database emontoya --table employee --hive-import --hive-table empleados -m 1 --mysql-delimiters
+

@@ -1,4 +1,3 @@
-# Hadoop - HDFS
 ## Curso Citizen Data Scientist - CAOBA
 ### Profesor: Edwin Montoya M. – emontoya@eafit.edu.co
 ## 2018
@@ -19,7 +18,7 @@ Terminal:
 
 Usuarios:
 
-    username: cds##baq
+    username: cds##bog3
     password: <enviado por email>
 
 ## 2. Los archivos de trabajo hdi-data.csv y export-data.csv
@@ -48,40 +47,40 @@ beeline> !connect jdbc:hive2://sandbox-hdp.hortonworks.com:2181/;serviceDiscover
 2. Crear la base de datos
 
 ```
-beeline> create database cds##baq;
+> create database cds##bog3;
 ```
 
 3. Crear la tabla HDI en Hive:
 ```
-beeline> use <username>;
-beeline> CREATE TABLE HDI (id INT, country STRING, hdi FLOAT, lifeex INT, mysch INT, eysch INT, gni INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+> use <username>;
+> CREATE TABLE HDI (id INT, country STRING, hdi FLOAT, lifeex INT, mysch INT, eysch INT, gni INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
 ```
 
-Nota: Esta tabla la crea en una BASE DE DATOS 'cds##baq'
+Nota: Esta tabla la crea en una BASE DE DATOS 'cds##bog3'
 ```
-beeline> use cds##baq;
-beeline> show tables;
-beeline> describe hdi;
+> use cds##bog3;
+> show tables;
+> describe hdi;
 ```
 
 4. cargar los datos desde el Gateway (local) a la tabla HDI:
 
 ```
-beeline> load data local inpath '/home/cds##baq/datasets/onu/hdi-data.csv' into table HDI;
+> load data local inpath '/home/cds##bog3/datasets/onu/hdi-data.csv' into table HDI;
 ```
 
 cargar datos desde el HDFS:
 
 ```
-beeline> load data inpath '/user/<username>/datasets/onu/hdi-data.csv' into table HDI;
+> load data inpath '/user/<username>/datasets/onu/hdi-data.csv' into table HDI;
 ```
 
 5. hacer consultas y cálculos sobre la tabla HDI:
 ```
-beeline> select * from hdi;
-beeline>
-beeline> select country, gni from hdi where gni > 2000;    
-beeline>
+> select * from hdi;
+>
+> select country, gni from hdi where gni > 2000;    
+>
 ```
 
 ### EJECUTAR UN JOIN CON HIVE:
@@ -94,34 +93,34 @@ usar los datos en 'datasets' de este repositorio.
 
 ```
 $ beeline
-beeline> use <username>;
-beeline> CREATE TABLE EXPO (country STRING, expct FLOAT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+> use <username>;
+> CREATE TABLE EXPO (country STRING, expct FLOAT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
 ```
 
 3. Carga los datos:export-data.csv
 ```
-beeline>LOAD DATA LOCAL INPATH 'export-data.csv' INTO TABLE EXPO;
+>LOAD DATA LOCAL INPATH 'export-data.csv' INTO TABLE EXPO;
 ```
 
 4. EJECUTAR EL JOIN DE 2 TABLAS:
 ```
-beeline> SELECT h.country, gni, expct FROM HDI h JOIN EXPO e ON (h.country = e.country) WHERE gni > 2000;
+> SELECT h.country, gni, expct FROM HDI h JOIN EXPO e ON (h.country = e.country) WHERE gni > 2000;
 ```
 
 
 ### WORDCOUNT EN HIVE:
 ```
-beeline> use <username>;
-beeline>CREATE EXTERNAL TABLE docs (line STRING) STORED AS TEXTFILE LOCATION '/user/cds##baq/datasets/gutenberg/gutenberg-small/';
+> use <username>;
+>CREATE EXTERNAL TABLE docs (line STRING) STORED AS TEXTFILE LOCATION '/user/cds##bog3/datasets/gutenberg/gutenberg-small/';
 ```
 
 // ordenado por palabra
 ```
-beeline>SELECT word, count(1) AS count FROM (SELECT explode(split(line,' ')) AS word FROM docs) w GROUP BY word ORDER BY word;
+>SELECT word, count(1) AS count FROM (SELECT explode(split(line,' ')) AS word FROM docs) w GROUP BY word ORDER BY word;
 ```
 // ordenado por frecuencia de menor a mayor
 ```
-beeline>SELECT word, count(1) AS count FROM (SELECT explode(split(line,' ')) AS word FROM docs) w GROUP BY word ORDER BY count;
+>SELECT word, count(1) AS count FROM (SELECT explode(split(line,' ')) AS word FROM docs) w GROUP BY word ORDER BY count;
 ```
 
 RETO:
@@ -196,13 +195,13 @@ $ hdfs dfs -ls /user/username/mysqlOut
 
 // Crear tabla HIVE a partir de definición tabla Mysql:
 ```
-$ sqoop create-hive-table --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-database cds##baq --hive-table employee -m 1--mysql-delimiters
+$ sqoop create-hive-table --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-database cds##bog3 --hive-table employee -m 1--mysql-delimiters
 ```
 
 // Transferir datos de una base de datos (tipo mysql) hacia HIVE vía HDFS:
 
 ```
-$ sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-import --hive-database cds##baq --hive-table employee -m 1 --mysql-delimiters
+$ sqoop import --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table employee --hive-import --hive-database cds##bog3 --hive-table employee -m 1 --mysql-delimiters
 ```
 
 // Transferir todas las tablas de una base de datos (tipo mysql) hacia HIVE vía HDFS:
@@ -221,15 +220,15 @@ sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --userna
 // Poblar o llenar la tabla Hive Manualmente:
 ```
 $ beeline
-beeline> use <username>;
-beeline> CREATE TABLE username_emps (empid INT, name  STRING, salary INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','  LINES TERMINATED BY '\n' STORED AS TEXTFILE;
-beeline>
+> use <username>;
+> CREATE TABLE username_emps (empid INT, name  STRING, salary INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','  LINES TERMINATED BY '\n' STORED AS TEXTFILE;
+>
 ```
 // Cargar datos a Hive Manualmente:
 ```
-beeline> load data inpath '/user/username/mysqlOut/part-m-00000' into table database.username_emps;
+> load data inpath '/user/username/mysqlOut/part-m-00000' into table database.username_emps;
 OK                          
-beeline> select * from username_emps;
+> select * from username_emps;
 OK
 101 name1 1800
 102 name2 1500
@@ -237,7 +236,7 @@ OK
 104 name4 2000
 105 name5 1600
 taken: 0.269 seconds, Fetched: 5 row(s) Time
-beeline> 
+> 
 ```
 
 //Sqoop export hacia mysql:

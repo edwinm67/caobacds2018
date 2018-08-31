@@ -4,5 +4,5 @@ grouped = GROUP words BY word;
 wordcount = FOREACH grouped GENERATE group, COUNT(words) as cont;
 ordered = ORDER wordcount BY cont DESC;
 Top10 = LIMIT ordered 10;
-STORE Top10 INTO '/user/<username>/top10words';
+STORE Top10 INTO '/tmp/top10words';
 DUMP Top10;

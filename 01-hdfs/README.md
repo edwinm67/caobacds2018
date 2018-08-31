@@ -1,4 +1,3 @@
-# Hadoop - HDFS
 ## Curso Citizen Data Scientist - CAOBA
 ### Profesor: Edwin Montoya M. – emontoya@eafit.edu.co
 ## 2018
@@ -17,7 +16,7 @@ Terminal:
 
 Usuarios:
 
-    username: cds##baq
+    username: cds##bog3
     password: <enviado por email>
 
 ## 2. GESTIÓN DE ARCHIVOS EN HDFS VÍA TERMINAL
@@ -41,7 +40,7 @@ Para efectos de esta guia, es equivalente el comando "hadoop fs" y "hdfs dfs". L
     user@master$ hdfs dfs -mkdir /user/<username>
     user@master$ hdfs dfs -mkdir /user/<username>/datasets
 
-Nota: reemplace “<username>” por aca usuario asignado
+Nota: reemplace '<username>' por aca usuario asignado
 
 ### Copiar archivos locales (al servidor gateway) hacia HDFS
 
@@ -103,7 +102,7 @@ comandos:
 
 ## 3. EXTRACCIÓN DE DATOS DESDE RDBMS VIA SQOOP HACIA HDFS
 
-![MYSQL2HDFS](mysql2hdfs.md)
+--> Importar datos de Bases de datos relacionales tipo Mysql hacia HDFS [Sqoop](mysql2hdfs.md)
 
 ## 4. GESTIÓN DE ARCHIVOS VÍA AMBARI WEB
 
