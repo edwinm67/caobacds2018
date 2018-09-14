@@ -15,7 +15,7 @@ Password: caoba
 
 importar datos via sqoop:
 
-$ sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --hive-database <username> --hive-overwrite --warehouse-dir=/tmp/<username>tmp/ --hive-import --mysql-delimiters -m 1 
+$ sqoop import-all-tables --connect jdbc:mysql://127.0.0.1:3306/retail_db --username=retail_dba --password=caoba --hive-database emontoya  --hive-overwrite --warehouse-dir=/tmp/<username>/retail_db --hive-import --mysql-delimiters -m 1 
 
 -- CATEGORIAS MÁS POPULARES DE PRODUCTOS
 
