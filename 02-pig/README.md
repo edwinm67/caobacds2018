@@ -120,3 +120,12 @@ Se tiene un conjunto de datos en el cual se evalúan las películas con un ratin
 5. Día en que peor evaluación en promedio han dado los usuarios
 6. Día en que mejor evaluación han dado los usuarios
 7. La mejor y peor película evaluada por genero
+
+### consulta hecha en PIG de Promedio de salario de Empleados:
+
+    Via Ambari-Web> Pig View
+
+    lines = LOAD '/user/emontoya/employee/' USING PigStorage(',') AS (emp_id: int, name:chararray, salary:float);
+    promedio = foreach (group lines all) generate AVG(lines.salary);
+    dump promedio;
+    FS -rm -r /tmp/yarn

@@ -254,3 +254,37 @@ mysql> CREATE TABLE username_employee2 (  emp_id INT NOT NULL,  name VARCHAR(4
 ```
 $ sqoop export --connect jdbc:mysql://127.0.0.1:3306/cursodb --username curso -P --table username_employee2 --export-dir /user/username/mysqlOut
 ```
+
+## MySQL vs Hive
+
+### consulta hecha en MySQL de Promedio de salario de Empleados:
+
+    $ mysql -u curso -p
+    password: curso
+    mysql> use cursodb;
+    mysql> select AVG(salary) from employee;
+    +-------------+                                                                    
+    | AVG(salary) |                                                                    
+    +-------------+                                                                    
+    |   1580.0000 |                                                                    
+    +-------------+                                                                    
+    1 row in set (0.00 sec)                                                            
+                                                                                   
+    mysql>
+
+### consulta hecha en HIVE de Promedio de salario de Empleados:
+
+    Via Ambari-Web> Hive View 2.0
+
+    # crear la tabla externa:
+
+    use emontoya;
+
+    create external table employee (emp_id int, name string, salary float) 
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY ','  
+    LINES TERMINATED BY '\n' 
+    STORED AS textfile;
+
+    select * from employee;
+
+    select AVG(salary) from employee;
